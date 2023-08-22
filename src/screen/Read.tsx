@@ -1,9 +1,18 @@
-import React from "react";
-import { View } from "react-native";
-import { Text } from "react-native-paper";
+import React, { useEffect } from "react";
+import { View, Text, Button } from "react-native";
+import useNfcData from "../hooks/useData";
+import useBackgroundTag from "../hooks/useBackgroundTag";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Read() {
+export default function Read({navigation}: any) {
+    const { data, isReading, readDatafromNfc } = useNfcData()
+
     return <View>
-        <Text>Read Screen</Text>
+        <Text>Read detail data in NFC</Text>
+        <Button title={isReading ? 'READING .....' : 'READ'} onPress={() => { readDatafromNfc() }} disabled={isReading} />
+        {data && <View>
+            <Text>Detail</Text>
+            <Text>{JSON.stringify(data)}</Text>
+        </View>}
     </View>
 }
